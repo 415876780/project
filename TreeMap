@@ -1,0 +1,104 @@
+package com.test.treemap;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
+
+public class TreeMapSort {
+	/*public static void main(String[] args) {
+		 //不指定排序器  
+        HashMap<String, String> treeMap1 = new HashMap<String, String>();  
+        treeMap1.put("a", "1");  
+        treeMap1.put("b", "3");  
+        treeMap1.put("c", "2");  
+        treeMap1.put("d", "4");  
+        System.out.println("treeMap1="+treeMap1);  
+  
+        //指定排序器  
+        TreeMap<String, String> treeMap2 = new TreeMap<String, String>(
+        		new ValueComparator(treeMap1));  
+          
+        System.out.println("treeMap2="+treeMap2);  
+	}
+	
+	public class ValueComparator implements Comparator<String>{  
+		  
+	    Map<String, String> base;  
+	      
+	    public ValueComparator(Map<String, String> map){  
+	        this.base = map;  
+	    }  
+	      
+	    @Override  
+	    public int compare(String o1, String o2) {  
+	        Integer value1 = Integer.parseInt(base.get(o1.toString()).toString());  
+	        Integer value2 = Integer.parseInt(base.get(o2.toString()).toString());  
+	        if ((value2 - value1) > 0) {  
+	            return 1;  
+	        }else if (value2 - value1 ==0) {  
+	            return o2.toString().compareTo(o1.toString());  
+	        }else {  
+	            return -1;  
+	        }  
+	    }  
+	}  */
+	
+	public static void main(String[] args) throws Exception {
+		// 接收用户录入
+		BufferedReader bufr = new BufferedReader(new InputStreamReader(
+				System.in));
+		// 声明HashMap集合，存储学生信息
+		Map<String, Double> map = new HashMap<String, Double>();
+		map.put("a", 1.0);
+		map.put("b", 2.0);
+		map.put("c", 3.0);
+		
+		// 声明TreeMap集合，可以通过tr的键对map集合中的值进行排序
+		TreeMap<String, Double> tr = new TreeMap<String, Double>(new Compare(
+				map));
+	
+		// 将Map集合中的元素存入TreeMap中
+		tr.putAll(map);
+		// 创建字符写入流对象
+		
+		// 迭代TreeMap中元素的映射关系
+		Iterator<Map.Entry<String, Double>> entryit = tr.entrySet().iterator();
+		while (entryit.hasNext()) {
+			Map.Entry<String, Double> entry = entryit.next();
+			// 将学生信息和相对应的总分写入到指定文件中
+			
+		}
+		// 关闭流资源
+		System.out.println("录入完成！");
+		System.out.println(map);
+		System.out.println(tr);
+	}
+
+	// 自定义比较器
+	public static class Compare implements Comparator<String> {
+		// 声明Map集合
+		private Map<String, Double> mp;
+
+		Compare(Map<String, Double> mp) {
+			this.mp = mp;
+		}
+		public int compare(String o1, String o2) {
+			// 通过TreeMap的健来找到Map集合中相对应的值，然后就可以对其值排序
+			int num = mp.get(o2).compareTo(mp.get(o1));
+			// 若值相同，则比较键
+			if (num == 0) {
+				return o2.compareTo(o1);
+			}
+			return num;
+		}
+
+	}
+	
+	
+}
